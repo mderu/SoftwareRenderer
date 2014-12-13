@@ -1,6 +1,6 @@
-#pragma once
-#ifndef __Vertex3F_H__
-#define __Vertex3F_H__
+
+#ifndef __VERTEX3F_H__
+#define __VERTEX3F_H__
 
 #include "Vector3F.h"
 

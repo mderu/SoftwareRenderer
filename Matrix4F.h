@@ -19,16 +19,17 @@ const float PI = 3.14159265f;
 class Matrix4F
 {
 public:
-	enum MatrixType { SCALE, TRANSLATE, ROTATE_RAD, ROTATE_DEG };
-	enum Axis { AXIS_X, AXIS_Y, AXIS_Z };
 	std::vector<std::vector<float> > matrix;
 
 	//Constructors
 	Matrix4F();
 	Matrix4F(Matrix4F& m);
+
+	/* Deprecated
 	Matrix4F(const float & tx, const float & ty, const float & tz, MatrixType T);
 	Matrix4F(Vector3F t, MatrixType T);
 	Matrix4F(const float & angle, const Axis axis);
+	*/
 
 	//Operators
 	Vector3F operator*(const Vector3F & vec) const;
@@ -57,12 +58,12 @@ public:
 	static Matrix4F rotateAround(Vector3F point, Vector3F eulerAngles);
 	static void useDegrees(bool useDeg);
 	static void useRadians(bool useDeg) ;
-	static MatrixType getRotType();
+	static bool isDegrees();
 	static Matrix4F transform(Vector3F position, Vector3F eulerAngles, Vector3F scale);
 
 
 private: 
-	static MatrixType stdRot;
+	static bool usesDegrees;
 };
 
 #endif

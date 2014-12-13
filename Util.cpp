@@ -16,7 +16,7 @@ Vector3F moveAlong(float rotX, float rotY, float rotZ, float dirX, float dirY, f
 {
 	Matrix4F retMe;
 	//c = cos, s = sin
-	float isDeg = (Matrix4F::getRotType() == Matrix4F::ROTATE_DEG ? PI / 180.0f : 1.0f);
+	float isDeg = (Matrix4F::isDegrees() ? PI / 180.0f : 1.0f);
 	float cx = cos(rotX * isDeg), cy = cos(rotY * isDeg), cz = cos(rotZ * isDeg);
 	float sx = sin(rotX * isDeg), sy = sin(rotY * isDeg), sz = sin(rotZ * isDeg);
 
@@ -103,7 +103,7 @@ float dotProduct(const Vector3F &a, const Vector3F &b)
 }
 float angleBetween(const Vector3F &a, const Vector3F &b)
 {
-	if (Matrix4F::getRotType() == Matrix4F::ROTATE_DEG)
+	if (Matrix4F::isDegrees())
 	{
 		return acos(dotProduct(a, b) / (a.magnitude() * b.magnitude())) * toDeg;
 	}
@@ -156,7 +156,7 @@ float rayIntersectsBoundingSphere(const Vector3F& rayOrigin, const Vector3F& ray
 
 Matrix4F camMatrix()
 {
-	Matrix4F retMe(eyeRot, Matrix4F::getRotType());
+	Matrix4F retMe = Matrix4F::rotate(eyeRot);
 	retMe[0][3] = eyePos.x;
 	retMe[1][3] = eyePos.y;
 	retMe[2][3] = eyePos.z;

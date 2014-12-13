@@ -44,7 +44,7 @@ Vector3F Mesh::getScale() const
 {
 	return s;
 }
-Matrix4F Mesh::getScaleMatrix() const{ return Matrix4F(s, Matrix4F::SCALE); }
+Matrix4F Mesh::getScaleMatrix() const{ return Matrix4F::scale(s); }
 
 void Mesh::setRotation(Vector3F p)
 {

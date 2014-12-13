@@ -6,15 +6,16 @@
 #include <iostream>
 
 //Private Static Member stdRot
-Matrix4F::MatrixType Matrix4F::stdRot = MatrixType::ROTATE_DEG;
-void Matrix4F::useDegrees(bool useDeg = true){ stdRot = useDeg ? MatrixType::ROTATE_DEG : MatrixType::ROTATE_RAD; }
-void Matrix4F::useRadians(bool useDeg = true){ stdRot = useDeg ? MatrixType::ROTATE_RAD : MatrixType::ROTATE_DEG; }
-Matrix4F::MatrixType Matrix4F::getRotType(){ return stdRot; }
+bool Matrix4F::usesDegrees = true;
+void Matrix4F::useDegrees(bool useDeg = true){ usesDegrees = useDeg; }
+void Matrix4F::useRadians(bool useRad = true){ usesDegrees = useRad; }
+bool Matrix4F::isDegrees(){ return usesDegrees; }
 
 //Constructors
 
 Matrix4F::Matrix4F() : matrix(4, std::vector<float>(4, 0)){}
 Matrix4F::Matrix4F(Matrix4F& m) { matrix = m.matrix; }
+/*
 Matrix4F::Matrix4F(const float & tx, const float & ty, const float & tz, MatrixType T) : matrix(4, std::vector<float>(4, 0))
 {
 	if (T == SCALE)
@@ -86,7 +87,7 @@ Matrix4F::Matrix4F(const float & angle, const Axis axis) : matrix(4, std::vector
 	matrix[3][3] = 1;
 }
 Matrix4F::Matrix4F(Vector3F t, MatrixType T) : Matrix4F(t.x, t.y, t.z, T){}
-
+*/
 //Operators
 
 Vector3F Matrix4F::operator*(const Vector3F & vec) const
@@ -195,7 +196,7 @@ Matrix4F Matrix4F::rotate(float px, float py, float pz)
 {
 	Matrix4F retMe;
 	//c = cos, s = sin
-	float isDeg = (stdRot == ROTATE_DEG ? PI / 180.0f : 1.0f);
+	float isDeg = usesDegrees ? PI / 180.0f : 1.0f;
 	float cx = cos(px * isDeg), cy = cos(py * isDeg), cz = cos(pz * isDeg);
 	float sx = sin(px * isDeg), sy = sin(py * isDeg), sz = sin(pz * isDeg);
 
@@ -226,7 +227,7 @@ Matrix4F Matrix4F::rotate(Vector3F p)
 //UNTESTED. May need to be moved into Util
 Matrix4F Matrix4F::rotateAround(Vector3F point, Vector3F eulerAngles)
 {
-	Matrix4F retMe(eulerAngles, stdRot);
+	Matrix4F retMe = rotate(eulerAngles);
 	//I did the math by hand here, so it might need some looking over.
 	retMe[0][3] = -point.x*retMe[0][0] - point.y*retMe[1][0] - point.z*retMe[2][0];
 	retMe[1][3] = -point.x*retMe[0][1] - point.y*retMe[1][1] - point.z*retMe[2][1];
@@ -236,7 +237,7 @@ Matrix4F Matrix4F::rotateAround(Vector3F point, Vector3F eulerAngles)
 
 Matrix4F Matrix4F::transform(Vector3F position = Vector3F(0, 0, 0), Vector3F eulerAngles = Vector3F(0, 0, 0), Vector3F scale = Vector3F(0, 0, 0))
 {
-	Matrix4F retMe(eulerAngles, stdRot);
+	Matrix4F retMe = rotate(eulerAngles);
 	for (unsigned i = 0; i < 4; i++)
 	{
 		retMe[0][i] *= scale.x;
