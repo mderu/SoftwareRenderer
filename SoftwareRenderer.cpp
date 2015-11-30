@@ -392,7 +392,7 @@ Mesh* processFile(char* filename)
 
 				//token is now the normal
 				token = token.substr(delimAt+1);
-				unsigned vertAt = stoi(strVert) - 1;
+				unsigned vertAt = atoi(strVert.c_str()) - 1;
 				if (strVert.size() == 0){ break; }
 
 				if (vertAt < m->oVertArray.size())
@@ -403,24 +403,24 @@ Mesh* processFile(char* filename)
 						face.u2 = face.u3;
 						face.v2 = face.v3;
 					}
-					retMe->vertArray[vertAt].n = retMe->oVertArray[vertAt].n = m->oVertArray[stoi(token) - 1].n;
+					retMe->vertArray[vertAt].n = retMe->oVertArray[vertAt].n = m->oVertArray[atoi(token.c_str()) - 1].n;
 					if (i == 0)
 					{
 						face.vert1 = &retMe->vertArray[vertAt];
-						face.u1 = u[stoi(strTex) - 1];
-						face.v1 = u[stoi(strTex) - 1];
+						face.u1 = u[atoi(strTex.c_str()) - 1];
+						face.v1 = u[atoi(strTex.c_str()) - 1];
 					}
 					else if (i == 1)
 					{
 						face.vert2 = &retMe->vertArray[vertAt];
-						face.u2 = u[stoi(strTex) - 1];
-						face.v2 = u[stoi(strTex) - 1];
+						face.u2 = u[atoi(strTex.c_str()) - 1];
+						face.v2 = u[atoi(strTex.c_str()) - 1];
 					}
 					else
 					{
 						face.vert3 = &retMe->vertArray[vertAt];
-						face.u3 = u[stoi(strTex) - 1];
-						face.v3 = u[stoi(strTex) - 1];
+						face.u3 = u[atoi(strTex.c_str()) - 1];
+						face.v3 = u[atoi(strTex.c_str()) - 1];
 					}
 					if (i >= 2)
 					{

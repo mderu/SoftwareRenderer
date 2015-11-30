@@ -8,6 +8,7 @@
 #include "Light.h"
 #include <vector>
 #include <iostream>
+#include <limits>
 
 using std::cin;
 using std::endl;

@@ -3,6 +3,7 @@
 #include "Vector3F.h"
 #include "Vertex3F.h"
 #include "Matrix4F.h"
+#include <cmath>
 #include <iostream>
 
 //Private Static Member stdRot
@@ -14,7 +15,7 @@ bool Matrix4F::isDegrees(){ return usesDegrees; }
 //Constructors
 
 Matrix4F::Matrix4F() : matrix(4, std::vector<float>(4, 0)){}
-Matrix4F::Matrix4F(Matrix4F& m) { matrix = m.matrix; }
+Matrix4F::Matrix4F(const Matrix4F& m) { matrix = m.matrix; }
 /*
 Matrix4F::Matrix4F(const float & tx, const float & ty, const float & tz, MatrixType T) : matrix(4, std::vector<float>(4, 0))
 {

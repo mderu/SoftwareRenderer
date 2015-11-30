@@ -23,7 +23,7 @@ public:
 
 	//Constructors
 	Matrix4F();
-	Matrix4F(Matrix4F& m);
+	Matrix4F(const Matrix4F& m);
 
 	/* Deprecated
 	Matrix4F(const float & tx, const float & ty, const float & tz, MatrixType T);
